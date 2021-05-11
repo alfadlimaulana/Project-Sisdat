@@ -1,3 +1,21 @@
+/* navbar */
+
+.login-navbar {
+  margin-bottom: 30px;
+}
+
+.navbar-brand {
+  font-family: "Proza Libre", sans-serif;
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.btn-login {
+  border-radius: 100px;
+  width: 100px;
+  background-color: #595ed4;
+}
+
 /* jumbotron */
 .jumbotron {
   height: 640px;
@@ -25,21 +43,43 @@
   z-index: 1;
 }
 
-/* navbar */
-.navbar-brand {
-  font-family: "Proza Libre", sans-serif;
-  font-weight: bold;
-  font-size: x-large;
+/* sign in anggota*/
+.login-content {
+  border: 1px solid black;
+  border-radius: 20px;
 }
 
-.btn-login {
-  border-radius: 100px;
-  width: 100px;
-  background-color: #595ed4;
+.login-title {
+  line-height: 0px;
+  text-align: center;
+  font-size: large;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.link-login {
+  line-height: 10px;
+}
+
+.link-login a {
+  color: green;
+}
+
+.footer-login {
+  padding: 20px 10px;
+  border-top: 1px solid black;
 }
 
 /* footer */
-.footer {
+footer {
   height: 80px;
   line-height: 80px;
+  border-top: 1px solid black;
+}
+
+.login-footer {
+  border-top: 1px solid black;
+  margin-top: 30px;
 }
