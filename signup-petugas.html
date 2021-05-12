@@ -22,6 +22,7 @@
     <div class="container-fluid container-navbar login-navbar">
       <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="landing.html">PJJ</a>
+        <div class="navbar-nav"></div>
       </nav>
     </div>
     <!-- akhir navbar -->
@@ -34,7 +35,7 @@
           <!-- header login -->
           <div class="row login-header">
             <div class="login-title mt-4">
-              <b>Sign-Up Anggota</b>
+              <b>Sign-Up Petugas</b>
               <hr />
             </div>
           </div>
@@ -58,13 +59,9 @@
                 </div>
               </div>
               <div class="row">
-                <div class="form-group">
-                  <label for="exampleFormControlSelect1">Jenis Kelamin</label>
-                  <select class="form-select" aria-label="Default select example">
-                    <option selected>Lihat Pilihan</option>
-                    <option value="1">Laki-laki</option>
-                    <option value="2">Perempuan</option>
-                  </select>
+                <div class="form-group col">
+                  <label for="inputTelepon">No. Telepon</label>
+                  <input type="text" class="form-control" id="inputTelepon" placeholder="Masukkan no.telepon anda" />
                 </div>
               </div>
               <div class="row">
@@ -78,10 +75,10 @@
           <!-- footer login -->
           <div class="row footer-login">
             <div class="link-login">
-              <p>Sudah menjadi anggota? <a href="login-anggota.html">Login Disini</a></p>
+              <p>Sudah terdaftar? <a href="login-petugas.html">Login Disini</a></p>
             </div>
             <div class="link-login">
-              <p>Anda petugas?<a href="login-petugas.html">Login Disini</a></p>
+              <p>Anda anggota?<a href="login-anggota.html">Login Disini</a></p>
             </div>
           </div>
           <!-- akhir login footer -->
