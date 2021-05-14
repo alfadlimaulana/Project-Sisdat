@@ -24,6 +24,11 @@
   background-size: cover;
 }
 
+.small-jumbotron {
+  height: 200px;
+  padding-top: 55px;
+}
+
 .display-4 {
   color: white;
   size: 64px;
@@ -37,10 +42,35 @@
   font-family: "PT Serif", serif;
 }
 
-.jumbotron .container {
+.jumbotron .landing-title {
   position: relative;
   top: 220px;
   z-index: 1;
+}
+
+.menu-title {
+  border: 5px solid white;
+  width: fit-content;
+  padding: 10px;
+  margin: auto;
+}
+
+/* tabel katalog */
+.tabel-katalog {
+  height: 500px;
+  background-color: #212529;
+  padding: 20px;
+  height: 400px;
+}
+
+.tabel-katalog::-webkit-scrollbar {
+  display: none;
+}
+
+/* form kembalikan */
+.form-balik {
+  background-color: #212529;
+  color: white;
 }
 
 /* sign in anggota*/
