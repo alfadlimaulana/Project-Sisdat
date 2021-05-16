@@ -14,6 +14,7 @@
   border-radius: 100px;
   width: 100px;
   background-color: #595ed4;
+  border: 0px;
 }
 
 /* jumbotron */
@@ -57,10 +58,9 @@
 
 /* tabel katalog */
 .tabel-katalog {
-  height: 500px;
   background-color: #212529;
   padding: 25px;
-  height: 400px;
+  height: 510px;
 }
 
 .tabel-katalog::-webkit-scrollbar {

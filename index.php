@@ -1,3 +1,8 @@
+<?php  
+require 'functions.php';
+$books = query("SELECT * FROM buku");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,7 +35,7 @@
             <a class="nav-link active" aria-current="page" href="katalog.html">Katalog</a>
             <a class="nav-link" href="order.html">Order</a>
             <a class="nav-link" href="tambah.php">Tambah Buku</a>
-            <a class="nav-link" href="hapus.html">Hapus Buku</a>
+            <a class="nav-link" href="index.php">Kelola Buku</a>
             <a class="nav-link" href="landing.html">Keluar</a>
           </div>
         </div>
@@ -39,13 +44,46 @@
     <!-- akhir navbar -->
 
     <!-- Jumbotron -->
-    <div class="jumbotron jumbotron-fluid">
-      <div class="container landing-title">
-        <h1 class="display-4">SELAMAT DATANG DI PERPUSTAKAAN JARAK JAUH</h1>
-        <p class="lead">Navigation bar akan membantu anda memulai aktivitas di sini.</p>
+    <div class="jumbotron jumbotron-fluid small-jumbotron">
+      <div class="container menu-title">
+        <h2 class="display-4">INDEX BUKU</h2>
       </div>
     </div>
     <!-- akhir jumbotron -->
+
+    <!-- table -->
+    <div class="container-fluid tabel-katalog overflow-auto" >
+      <table class="table table-dark" id="dtBasicExample">
+        <thead>
+          <tr>
+            <th scope="col">Gambar</th>
+            <th scope="col">Kode</th>
+            <th scope="col">Judul</th>
+            <th scope="col">Penulis</th>
+            <th scope="col">Tahun Terbit</th>
+            <th scope="col">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <?php  foreach($books as $book): ?>
+          <?php $kode = $book["Kode_Buku"]; ?>  
+          <tr>
+            <td><img src="img/Buku/<?= $book["Gambar"]; ?>" width="100"></td>
+            <th scope="row"><?= $book["Kode_Buku"]; ?></th>
+            <td><?= $book["Judul"]; ?></td>
+            <td><?= $book["Penulis"]; ?></td>
+            <td><?= $book["Tahun_Terbit"]; ?></td>
+            <td>
+              <a href="ubah.php?Kode_Buku=<?= $book["Kode_Buku"]; ?>" onclick="return confirm('Ubah Buku dengan Kode <?= $kode ?> ?')">Ubah</a> | 
+              <a href="hapus.php?Kode_Buku=<?= $book["Kode_Buku"]; ?>" onclick="return confirm('Hapus Buku dengan Kode <?= $kode ?> ?')">Hapus</a>
+            </td>
+          </tr>
+          <?php  endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+    <!-- akhir table -->
 
     <!-- footer -->
     <footer class="landing">
@@ -61,5 +99,6 @@
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script src="index.js"></script>
   </body>
 </html>
