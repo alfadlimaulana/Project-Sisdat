@@ -227,4 +227,29 @@ function daftar_anggota($data){
 	return mysqli_affected_rows($conn);
 }
 
+function batas_kembali(){
+    $date1 = date('d-m-Y');
+    $date = new DateTime($date1);
+    $date_plus = $date->modify("+14 days");
+
+    return $date_plus->format("d-m-Y");
+}
+
+function pinjam($data){
+	global $conn;
+	//ambil data dari tiap elemen dalam form
+	$Kode_Buku = htmlspecialchars($data["Kode_Buku"]);
+	$Tanggal_Pinjam = htmlspecialchars($data["Tanggal_Pinjam"]);
+	$Batas_Kembali = htmlspecialchars($data["Batas_Kembali"]);
+	$Username_Anggota = $_COOKIE["username"];
+
+
+	//query update data
+	$query = "INSERT INTO peminjaman VALUES ('', '$Tanggal_Pinjam', '$Batas_Kembali', '$Username_Anggota', '$Kode_Buku')";
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
+}
+
+
 ?>

@@ -17,17 +17,17 @@ $Kode_Buku = $_GET["Kode_Buku"];
 
 $book = query("SELECT * FROM buku WHERE Kode_Buku = '$Kode_Buku'")[0];
 
-if(isset($_POST["submit"])){
+if(isset($_POST["Pinjam"])){
   //cek berhasil atau tidak
-  if(ubah($_POST) > 0){
+  if(pinjam($_POST) > 0){
     echo "<script>
-            alert('Data berhasil diubah!');
-            document.location.href = 'kelola-buku.php';
+            alert('Buku Dalam Proses Pengiriman!');
+            document.location.href = 'pinjam.php';
           </script>";
   }else{
     echo "<script>
-            alert('Data gagal diubah!');
-            document.location.href = 'kelola-buku.php';
+            alert('Buku Tidak Dapat Dipinjam!');
+            document.location.href = 'pinjam.php';
           </script>";
   }
 }
@@ -88,39 +88,43 @@ if(isset($_POST["submit"])){
         <div class="col-10">
           
           <form action="" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="Gambar_Lama" value="<?= $book["Gambar"] ?>">
+            <input type="hidden" name="Tanggal_Pinjam" value="<?= date('d-m-Y') ?>">
+            <input type="hidden" name="Batas_Kembali" value="<?= batas_kembali() ?>">
+            <input type="hidden" name="Kode_Buku" value="<?= $book["Kode_Buku"] ?>">
+
             <div class="row">
               <div class="form-group col-sm-2">
                 <label for="KodeBuku">Kode</label>
-                <input type="text" class="form-control" id="KodeBuku" name="Kode_Buku" required value="<?= $book["Kode_Buku"]?>"/>
+                <input type="text" class="form-control" id="KodeBuku" name="Kode_Buku" required value="<?= $book["Kode_Buku"]?>" disabled/>
               </div>
               <div class="form-group col-sm-10">
                 <label for="JudulBuku">Judul</label>
-                <input type="text" class="form-control" id="JudulBuku" name="Judul" required value="<?= $book["Judul"]?>"/>
+                <input type="text" class="form-control" id="JudulBuku" name="Judul" required value="<?= $book["Judul"]?>" disabled/>
               </div>
             </div>
             <div class="row">
               <div class="form-group col">
                 <label for="penulisBuku">Penulis</label>
-                <input type="text" class="form-control" id="penulisBuku" name="Penulis" required value="<?= $book["Penulis"]?>"/>
+                <input type="text" class="form-control" id="penulisBuku" name="Penulis" required value="<?= $book["Penulis"]?>" disabled/>
               </div>
             </div>
             <div class="row">
               <div class="form-group col-9">
                 <label for="gambar">Gambar</label>
                 <br>
-                <img src="img/Buku/<?= $book["Gambar"] ?>" width="108">
-                <br>
-                <input type="file" class="form-control" id="gambar" name="Gambar"/>
+                <img src="img/Buku/<?= $book["Gambar"] ?>" width="250" id="gambar" name="gambar">
+      
               </div>
               <div class="form-group col-3">
                 <label for="tahunTerbit">Tahun Terbit</label>
-                <input type="text" class="form-control" id="tahunTerbit" placeholder="YYYY" name="Tahun_Terbit" required value="<?= $book["Tahun_Terbit"]?>"/>
+                <input type="text" class="form-control" id="tahunTerbit" placeholder="YYYY" name="Tahun_Terbit" required value="<?= $book["Tahun_Terbit"]?>" disabled/>
               </div>
             </div>
             <div class="row justify-content-end">
               <div class="form-group col-3">
-                <button type="submit" class="btn btn-primary" style="width: 100%" name="submit" onclick="return confirm('Ubah Data Buku?')">Pinjam</button>
+                <p>Batas Kembali : <?= batas_kembali() ?> </p>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%" name="Pinjam" onclick="return confirm('Buku Akan Dikirim ke Alamat Anda\nDikenakan Biaya Rp 15.000 dibayar COD\n\nBatas Kembali : <?= batas_kembali() ?>')">Pinjam</button>
               </div>
             </div>
           </form>

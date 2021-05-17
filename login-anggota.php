@@ -36,6 +36,7 @@ if(isset($_POST["Login_Anggota"])){
   if(mysqli_num_rows($result) === 1){
     //cek password
     $database = mysqli_fetch_assoc($result);
+    setcookie('username', $database['Username_Anggota'], time()+9999);
     if(password_verify($Password_Anggota, $database["Password_Anggota"])){
 
       //set session
@@ -44,7 +45,7 @@ if(isset($_POST["Login_Anggota"])){
       //cek tetap masuk
       if(isset($_POST["Tetap_Login"])){
         //buat cookie
-        setcookie('username', $database['Username_Anggota'], time()+300);
+        setcookie('username', $database['Username_Anggota'], time()+9999);
         setcookie('key', hash('sha256', $database['Username_Anggota']), time()+300);
       }
 
