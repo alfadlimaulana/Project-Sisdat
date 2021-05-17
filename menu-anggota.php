@@ -1,3 +1,18 @@
+<?php  
+
+session_start();
+
+if(!isset($_SESSION["Login_Anggota"])){
+
+  echo "<script>
+            alert('Login Terlebih Dahulu!');
+            document.location.href = 'login-anggota.php';
+        </script>";
+  exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,28 +34,32 @@
   </head>
   <body>
     <!-- navbar -->
-    <div class="container-fluid container-navbar">
-      <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">PJJ</a>
-        <div class="navbar-nav">
-          <a class="btn btn-primary btn-login" href="login-anggota.php" role="button">Login</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="menu-anggota.php">PJJ</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="katalog.php">Katalog</a>
+            <a class="nav-link" href="pinjam.php">Pinjam</a>
+            <a class="nav-link" href="kembalikan.php">Kembalikan</a>
+            <a class="nav-link" href="logout.php">Keluar</a>
+          </div>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
     <!-- akhir navbar -->
 
     <!-- Jumbotron -->
     <div class="jumbotron jumbotron-fluid">
       <div class="container landing-title">
-        <h1 class="display-4">PINJAM KAPANPUN & DIMANAPUN</h1>
-        <p class="lead">Lebih dari 1000 orang telah menjadi anggota. <br />Daftarkan dirimu sekarang!</p>
-        <a class="btn btn-primary btn-login" href="daftar-anggota.php">Daftar</a>
+        <h1 class="display-4">SELAMAT DATANG DI PERPUSTAKAAN JARAK JAUH</h1>
+        <p class="lead">Navigation bar akan membantu anda memulai aktivitas di sini.</p>
       </div>
     </div>
     <!-- akhir jumbotron -->
-
-
-
 
     <!-- footer -->
     <footer class="landing">
@@ -48,9 +67,6 @@
         <div class="row footer">
           <div class="col text-center">
             <p>2021. All Rights Reserved by Kelompok 2 Sisdat Kelas A</p>
-                      <div class="link-login">
-              <p><a href="login-petugas.php">Login Petugas</a></p>
-          </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if(!isset($_SESSION["Login_Petugas"])){
@@ -12,22 +11,13 @@ if(!isset($_SESSION["Login_Petugas"])){
 }  
 
 require 'functions.php';
+$books = query("SELECT * FROM buku");
 
-if(isset($_POST["submit"])){
-  //cek berhasil atau tidak
-  if(tambah($_POST) > 0){
-    echo "<script>
-            alert('Data berhasil ditambahkan!');
-            document.location.href = 'kelola-buku.php';
-          </script>";
-  }else{
-    echo "<script>
-            alert('Data gagal ditambahkan!');
-            document.location.href = 'kelola-buku.php';
-          </script>";
-  }
+//tombol cari ditekan
+if(isset($_POST["cari"])){
+  $books = cari($_POST["kata_kunci"]);
 }
-  
+
 ?>
 
 <!DOCTYPE html>
@@ -60,8 +50,8 @@ if(isset($_POST["submit"])){
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto">
             <a class="nav-link" href="order.php">Order</a>
-            <a class="nav-link active" href="tambah.php" aria-current="page">Tambah Buku</a>
-            <a class="nav-link" href="kelola-buku.php">Kelola Buku</a>
+            <a class="nav-link" href="tambah.php">Tambah Buku</a>
+            <a class="nav-link active" aria-current="page" href="kelola-buku.php">Kelola Buku</a>
             <a class="nav-link" href="logout.php">Keluar</a>
           </div>
         </div>
@@ -72,55 +62,58 @@ if(isset($_POST["submit"])){
     <!-- Jumbotron -->
     <div class="jumbotron jumbotron-fluid small-jumbotron">
       <div class="container menu-title">
-        <h2 class="display-4">TAMBAH BUKU</h2>
+        <h2 class="display-4">KELOLA BUKU</h2>
       </div>
     </div>
     <!-- akhir jumbotron -->
 
-    <!-- form -->
-    <div class="container-fluid form-balik">
-      <div class="row justify-content-center">
-        <!-- signup content -->
-        <div class="col-10">
-          
-          <form action="" method="post" enctype="multipart/form-data">
-            <div class="row">
-              <div class="form-group col-sm-2">
-                <label for="KodeBuku">Kode</label>
-                <input type="text" class="form-control" id="KodeBuku" placeholder="Harus Unik!" name="Kode_Buku" required/>
-              </div>
-              <div class="form-group col-sm-10">
-                <label for="JudulBuku">Judul</label>
-                <input type="text" class="form-control" id="JudulBuku" name="Judul" required/>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col">
-                <label for="penulisBuku">Penulis</label>
-                <input type="text" class="form-control" id="penulisBuku" name="Penulis" required/>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-9">
-                <label for="gambar">Gambar</label>
-                <input type="file" class="form-control" id="gambar" name="Gambar" required/>
-              </div>
-              <div class="form-group col-3">
-                <label for="tahunTerbit">Tahun Terbit</label>
-                <input type="text" class="form-control" id="tahunTerbit" placeholder="YYYY" name="Tahun_Terbit" required/>
-              </div>
-            </div>
-            <div class="row justify-content-end">
-              <div class="form-group col-3">
-                <button type="submit" class="btn btn-primary" style="width: 100%" name="submit" onclick="return confirm('Tambahkan Buku?')">Tambahkan</button>
-              </div>
-            </div>
-          </form>
-          <!-- akhir signup content -->
+    <!-- table -->
+    <div class="container-fluid tabel-katalog overflow-auto" >
+      <!-- cari -->
+      <form action="" method="post">
+        <div class="row justify-content-end">
+          <div class="col-auto">
+            <label for="searchBuku" class="visually-hidden">Password</label>
+            <input type="text" class="form-control" id="searchBuku" placeholder="Masukkan kata kunci" name="kata_kunci" autofocus/>
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3" name="cari">Cari</button>
+          </div>
         </div>
-      </div>
+      </form>
+      <!--akhir cari -->
+
+      <table class="table table-dark" id="dtBasicExample">
+        <thead>
+          <tr>
+            <th scope="col">Gambar</th>
+            <th scope="col">Kode</th>
+            <th scope="col">Judul</th>
+            <th scope="col">Penulis</th>
+            <th scope="col">Tahun Terbit</th>
+            <th scope="col">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <?php  foreach($books as $book): ?>
+          <?php $kode = $book["Kode_Buku"]; ?>  
+          <tr>
+            <td><img src="img/Buku/<?= $book["Gambar"]; ?>" width="100"></td>
+            <th scope="row"><?= $book["Kode_Buku"]; ?></th>
+            <td><?= $book["Judul"]; ?></td>
+            <td><?= $book["Penulis"]; ?></td>
+            <td><?= $book["Tahun_Terbit"]; ?></td>
+            <td>
+              <a href="ubah.php?Kode_Buku=<?= $book["Kode_Buku"]; ?>" onclick="return confirm('Ubah Buku dengan Kode <?= $kode ?> ?')">Ubah</a> | 
+              <a href="hapus.php?Kode_Buku=<?= $book["Kode_Buku"]; ?>" onclick="return confirm('Hapus Buku dengan Kode <?= $kode ?> ?')">Hapus</a>
+            </td>
+          </tr>
+          <?php  endforeach; ?>
+        </tbody>
+      </table>
     </div>
-    <!-- akhir form -->
+    <!-- akhir table -->
 
     <!-- footer -->
     <footer class="landing">

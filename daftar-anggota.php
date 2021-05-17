@@ -1,7 +1,17 @@
 <?php 
 
-if(isset($_POST["register"])){
-  
+require 'functions.php'; 
+
+if(isset($_POST["Daftar_Anggota"])){
+  if(daftar_anggota($_POST) > 0){
+    echo "<script>
+            alert('Anggota baru BERHASIL terdaftar!');
+          </script>";
+  }else{
+    echo "<script>
+            alert('Anggota baru GAGAL terdaftar!');
+          </script>";
+  }
 }
 
 ?>
@@ -42,7 +52,7 @@ if(isset($_POST["register"])){
           <!-- header login -->
           <div class="row login-header">
             <div class="login-title mt-4">
-              <b>Sign-Up Anggota</b>
+              <b>Daftar Anggota</b>
               <hr />
             </div>
           </div>
@@ -50,34 +60,40 @@ if(isset($_POST["register"])){
           <div class="row">
             <form action="" method="post">
               <div class="row">
-                <div class="form-group col-sm-6">
+                <div class="form-group col">
                   <label for="inputEmail4">Username</label>
-                  <input type="email" class="form-control" id="inputEmail4" />
+                  <input type="text" class="form-control" id="inputEmail4" name="Username_Anggota" value="<?php if(isset($_POST["Daftar_Anggota"])){ echo $_POST['Username_Anggota']; }?>" required/>
                 </div>
+              </div>
+              <div class="row">
                 <div class="form-group col-sm-6">
                   <label for="inputPassword4">Password</label>
-                  <input type="password" class="form-control" id="inputPassword4" />
+                  <input type="password" class="form-control" id="inputPassword4" name="Password_Anggota" value="<?php if(isset($_POST["Daftar_Anggota"])){ echo $_POST['Password_Anggota']; }?>" required/>
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="inputPassword4.2">Konfirmasi Password</label>
+                  <input type="password" class="form-control" id="inputPassword4.2" name="Password2_Anggota" value="<?php if(isset($_POST["Daftar_Anggota"])){ echo $_POST['Password2_Anggota']; }?>" required/>
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col">
                   <label for="inputAddress">Alamat</label>
-                  <input type="text" class="form-control" id="inputAddress" placeholder="Masukkan alamat anda" />
+                  <input type="text" class="form-control" id="inputAddress" placeholder="Masukkan alamat anda" name="Alamat_Anggota" value="<?php if(isset($_POST["Daftar_Anggota"])){ echo $_POST['Alamat_Anggota']; }?>" required/>
                 </div>
               </div>
               <div class="row">
                 <div class="form-group">
                   <label for="exampleFormControlSelect1">Jenis Kelamin</label>
-                  <select class="form-select" aria-label="Default select example">
-                    <option selected>Lihat Pilihan</option>
-                    <option value="1">Laki-laki</option>
-                    <option value="2">Perempuan</option>
+                  <select class="form-select" aria-label="Default select example" name="JK" required>
+                    <option selected value="none">Lihat Pilihan</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
                   </select>
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col">
-                  <button type="submit" class="btn btn-primary" name="register">Sign Up</button>
+                  <button type="submit" class="btn btn-primary" name="Daftar_Anggota">Daftar</button>
                 </div>
               </div>
             </form>
@@ -86,10 +102,10 @@ if(isset($_POST["register"])){
           <!-- footer login -->
           <div class="row footer-login">
             <div class="link-login">
-              <p>Sudah menjadi anggota? <a href="login-anggota.html">Login Disini</a></p>
+              <p>Sudah menjadi anggota? <a href="login-anggota.php">Login Disini</a></p>
             </div>
             <div class="link-login">
-              <p>Anda petugas?<a href="login-petugas.html">Login Disini</a></p>
+              <p>Anda petugas? <a href="login-petugas.php">Login Disini</a></p>
             </div>
           </div>
           <!-- akhir login footer -->
@@ -103,7 +119,7 @@ if(isset($_POST["register"])){
       <div class="container-fluid">
         <div class="row footer">
           <div class="col text-center">
-            <p>2021. All Rights Reserved by Kelompok 2</p>
+            <p>2021. All Rights Reserved by Kelompok 2 Sisdat Kelas A</p>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(!isset($_SESSION["Login_Petugas"])){
+if(!isset($_SESSION["Login_Anggota"])){
 
   echo "<script>
             alert('Login Terlebih Dahulu!');
@@ -57,15 +57,15 @@ if(isset($_POST["submit"])){
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="menu-petugas.php">PJJ</a>
+        <a class="navbar-brand" href="menu-anggota.php">PJJ</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto">
-            <a class="nav-link" href="order.php">Order</a>
-            <a class="nav-link" href="tambah.php">Tambah Buku</a>
-            <a class="nav-link active" href="kelola-buku.php" aria-current="page">Kelola Buku</a>
+            <a class="nav-link" href="katalog.php">Katalog</a>
+            <a class="nav-link active" aria-current="page" href="pinjam.php">Pinjam</a>
+            <a class="nav-link" href="kembalikan.php">Kembalikan</a>
             <a class="nav-link" href="logout.php">Keluar</a>
           </div>
         </div>
@@ -76,7 +76,7 @@ if(isset($_POST["submit"])){
     <!-- Jumbotron -->
     <div class="jumbotron jumbotron-fluid small-jumbotron">
       <div class="container menu-title">
-        <h2 class="display-4">UBAH BUKU</h2>
+        <h2 class="display-4">KONFIRMASI PINJAM</h2>
       </div>
     </div>
     <!-- akhir jumbotron -->
@@ -120,7 +120,7 @@ if(isset($_POST["submit"])){
             </div>
             <div class="row justify-content-end">
               <div class="form-group col-3">
-                <button type="submit" class="btn btn-primary" style="width: 100%" name="submit" onclick="return confirm('Ubah Data Buku?')">Ubah Data</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%" name="submit" onclick="return confirm('Ubah Data Buku?')">Pinjam</button>
               </div>
             </div>
           </form>

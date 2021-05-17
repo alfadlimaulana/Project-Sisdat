@@ -1,4 +1,14 @@
-<?php  
+<?php
+session_start();
+
+if(!isset($_SESSION["Login_Petugas"])){
+
+  echo "<script>
+            alert('Login Terlebih Dahulu!');
+            document.location.href = 'login-petugas.php';
+        </script>";
+  exit;
+}  
 
 require 'functions.php';
 
