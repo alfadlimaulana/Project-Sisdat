@@ -15,19 +15,20 @@ require 'functions.php';
 $Kode_Buku = $_GET["Kode_Buku"];
 //query data berdasar kode
 
-$book = query("SELECT * FROM buku WHERE Kode_Buku = '$Kode_Buku'")[0];
+$Username_Anggota = $_COOKIE["username"];
+
+$database = query("SELECT * FROM peminjaman NATURAL JOIN buku WHERE Username_Anggota = '$Username_Anggota'")[0];
 
 if(isset($_POST["Pinjam"])){
   //cek berhasil atau tidak
-  if(pinjam($_POST) > 0){
+  if(kembalikan($_POST) > 0 && hapus_peminjaman($_POST)){
     echo "<script>
-            alert('Buku Dalam Proses Pengiriman!');
-            document.location.href = 'pinjam.php';
+            alert('Buku Dalam Proses Pengembalian!');
+            document.location.href = 'kembalikan.php';
           </script>";
   }else{
     echo "<script>
-            alert('Buku Tidak Dapat Dipinjam!');
-            document.location.href = 'pinjam.php';
+            alert('Buku Tidak Dapat Dikembalikan!');
           </script>";
   }
 }
@@ -64,8 +65,8 @@ if(isset($_POST["Pinjam"])){
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto">
             <a class="nav-link" href="katalog.php">Katalog</a>
-            <a class="nav-link active" aria-current="page" href="pinjam.php">Pinjam</a>
-            <a class="nav-link" href="kembalikan.php">Kembalikan</a>
+            <a class="nav-link" href="pinjam.php">Pinjam</a>
+            <a class="nav-link active" aria-current="page" href="kembalikan.php">Kembalikan</a>
             <a class="nav-link" href="logout.php">Keluar</a>
           </div>
         </div>
@@ -76,7 +77,7 @@ if(isset($_POST["Pinjam"])){
     <!-- Jumbotron -->
     <div class="jumbotron jumbotron-fluid small-jumbotron">
       <div class="container menu-title">
-        <h2 class="display-4">KONFIRMASI PINJAM</h2>
+        <h2 class="display-4">KONFIRMASI</h2>
       </div>
     </div>
     <!-- akhir jumbotron -->
@@ -88,43 +89,43 @@ if(isset($_POST["Pinjam"])){
         <div class="col-10">
           
           <form action="" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="Tanggal_Pinjam" value="<?= date('d-m-Y') ?>">
-            <input type="hidden" name="Batas_Kembali" value="<?= batas_kembali() ?>">
-            <input type="hidden" name="Kode_Buku" value="<?= $book["Kode_Buku"] ?>">
+            <input type="hidden" name="Tanggal_Kembali" value="<?= date('d-m-Y') ?>">
+            <input type="hidden" name="Batas_Kembali" value="<?= $database["Batas_Kembali"] ?>">
+            <input type="hidden" name="Kode_Buku" value="<?= $database["Kode_Buku"] ?>">
 
             <div class="row">
               <div class="form-group col-sm-2">
                 <label for="KodeBuku">Kode</label>
-                <input type="text" class="form-control" id="KodeBuku" name="Kode_Buku" required value="<?= $book["Kode_Buku"]?>" disabled/>
+                <input type="text" class="form-control" id="KodeBuku" name="Kode_Buku" required value="<?= $database["Kode_Buku"]?>" disabled/>
               </div>
               <div class="form-group col-sm-10">
                 <label for="JudulBuku">Judul</label>
-                <input type="text" class="form-control" id="JudulBuku" name="Judul" required value="<?= $book["Judul"]?>" disabled/>
+                <input type="text" class="form-control" id="JudulBuku" name="Judul" required value="<?= $database["Judul"]?>" disabled/>
               </div>
             </div>
             <div class="row">
               <div class="form-group col">
                 <label for="penulisBuku">Penulis</label>
-                <input type="text" class="form-control" id="penulisBuku" name="Penulis" required value="<?= $book["Penulis"]?>" disabled/>
+                <input type="text" class="form-control" id="penulisBuku" name="Penulis" required value="<?= $database["Penulis"]?>" disabled/>
               </div>
             </div>
             <div class="row">
               <div class="form-group col-9">
                 <label for="gambar">Gambar</label>
                 <br>
-                <img src="img/Buku/<?= $book["Gambar"] ?>" width="250" id="gambar" name="gambar">
+                <img src="img/Buku/<?= $database["Gambar"] ?>" width="250" id="gambar" name="gambar">
       
               </div>
               <div class="form-group col-3">
                 <label for="tahunTerbit">Tahun Terbit</label>
-                <input type="text" class="form-control" id="tahunTerbit" placeholder="YYYY" name="Tahun_Terbit" required value="<?= $book["Tahun_Terbit"]?>" disabled/>
+                <input type="text" class="form-control" id="tahunTerbit" placeholder="YYYY" name="Tahun_Terbit" required value="<?= $database["Tahun_Terbit"]?>" disabled/>
               </div>
             </div>
             <div class="row justify-content-end">
               <div class="form-group col-3">
-                <p>Batas Kembali : <?= batas_kembali() ?> </p>
+                <p>Batas Kembali : <?= $database["Batas_Kembali"] ?> </p>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%" name="Pinjam" onclick="return confirm('Buku Akan Dikirim ke Alamat Anda\nDikenakan Biaya Rp 15.000,- dibayar COD\n\nBatas Kembali : <?= batas_kembali() ?>')">Pinjam</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%" name="Pinjam" onclick="return confirm('Buku Dalam Proses Pengembalian!\nDikenakan Biaya Rp 15.000,- dibayar COD\n\nBatas Kembali : <?= $database["Batas_Kembali"] ?>\nApabila Melewati Batas Kembali Dikenakan Biaya Rp 5000,-/hari')">Kembalikan</button>
               </div>
             </div>
           </form>

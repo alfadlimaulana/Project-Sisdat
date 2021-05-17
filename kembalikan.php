@@ -16,11 +16,11 @@ require 'functions.php';
 $Username_Anggota = $_COOKIE["username"];
 
 //cari buku
-$books = query("SELECT * FROM peminjaman NATURAL JOIN buku WHERE Username_Anggota = '$Username_Anggota'");
+$database = query("SELECT * FROM peminjaman NATURAL JOIN buku WHERE Username_Anggota = '$Username_Anggota'");
 
 //tombol cari ditekan
 if(isset($_POST["cari"])){
-  $books = cari($_POST["kata_kunci"]);
+  $database = cari($_POST["kata_kunci"]);
 }
 
 ?>
@@ -100,7 +100,7 @@ if(isset($_POST["cari"])){
         </thead>
         <tbody>
 
-          <?php  foreach($books as $book): ?>
+          <?php  foreach($database as $book): ?>
           <tr>
             <td><img src="img/Buku/<?= $book["Gambar"]; ?>" width="100"></td>
             <th scope="row"><?= $book["Kode_Buku"]; ?></th>
@@ -108,7 +108,7 @@ if(isset($_POST["cari"])){
             <td><?= $book["Penulis"]; ?></td>
             <td><?= $book["Tahun_Terbit"]; ?></td>
             <td>
-              <a class="btn btn-primary btn-login" href="konfirmasi-pinjam.php?Kode_Buku=<?= $book["Kode_Buku"]; ?>">Kembalikan</a>
+              <a class="btn btn-primary btn-login" href="konfirmasi-kembalikan.php?Kode_Buku=<?= $book["Kode_Buku"]; ?>">Kembalikan</a>
             </td>
           </tr>
           <?php  endforeach; ?>

@@ -251,5 +251,60 @@ function pinjam($data){
 	return mysqli_affected_rows($conn);
 }
 
+function kembalikan($data){
+	global $conn;
+	//ambil data dari tiap elemen dalam form
+	$Tanggal_Kembali = htmlspecialchars($data["Tanggal_Kembali"]);
+	$Batas_Kembali = htmlspecialchars($data["Batas_Kembali"]);
+
+	$date1 = new DateTime($Tanggal_Kembali);
+	$date2 = new DateTime($Batas_Kembali);
+	
+	if ($date1 > $date2) {
+   		$begin = new DateTime($Batas_Kembali);
+		$end = new DateTime($Tanggal_Kembali);
+		$diff = $begin->diff($end);
+
+		$Selisi_Hari = $diff->format("%d");
+	}else{
+		$Selisi_Hari = 0;
+	}
+
+	if($Selisi_Hari > 0){
+		$Jumlah_Denda = $diff->format("%d")*5000;
+		echo "<script>
+            	alert('Anda Dikenakan Denda!\nSebesar: <?= $Jumlah_Denda');
+        	</script>";
+	}else{
+		$Jumlah_Denda = 0;
+	}
+
+	$Biaya_Total = $Jumlah_Denda + 15000;
+
+	$Username_Anggota = $_COOKIE["username"];
+	$Kode_Buku = htmlspecialchars($data["Kode_Buku"]);
+
+
+	//query update data
+	$query = "INSERT INTO pengembalian VALUES ('', '$Tanggal_Kembali', '$Batas_Kembali', '$Jumlah_Denda', '$Biaya_Total', '$Username_Anggota', '$Kode_Buku')";
+	mysqli_query($conn, $query);
+
+
+
+
+
+	return mysqli_affected_rows($conn);
+}
+
+function hapus_peminjaman($data){
+	global $conn;
+	$Kode_Buku = htmlspecialchars($data["Kode_Buku"]);
+
+	$query = "DELETE FROM peminjaman WHERE Kode_Buku = '$Kode_Buku'";
+
+	mysqli_query($conn, $query);
+	return mysqli_affected_rows($conn);
+}
+
 
 ?>
